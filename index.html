@@ -20,6 +20,7 @@
           if (result === "granted") {
             navigator.serviceWorker.ready.then((registration) => {
               registration.showNotification("バイブレーションの例", {
+                badge: "./icon-192.png",
                 body: "ブンブン! ブンブン!",
                 icon: "./icon-192.png",
                 vibrate: [200, 100, 200, 100, 200, 100, 200],
