@@ -10,16 +10,19 @@
           function (registration) {
             console.log('Service Worker Registered'); 
             // push通知のsubscriptrionの入手
-            let subscription = await registration.pushManager.getSubscription();
-            console.log(JSON.stringify(subscription));
-            // subscribeされていない場合にsubscribeを実行
-            if (!subscription) {
-                subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: "<key>"
-                });
-                console.log(`subscribed! endpoint: ${subscription.endpoint}`);
-            }
+            registration.pushManager.getSubscription().then(
+              function (subscription) {
+                console.log(JSON.stringify(subscription));
+                // subscribeされていない場合にsubscribeを実行
+                if (!subscription) {
+                    subscription = await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: "<key>"
+                    });
+                    console.log(`subscribed! endpoint: ${subscription.endpoint}`);
+                }
+              }
+            );
           }
         );
       }
