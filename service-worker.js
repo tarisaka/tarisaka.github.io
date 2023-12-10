@@ -10,7 +10,7 @@ self.addEventListener('activate', function(e) {
 self.addEventListener('message', function (event) {
   console.log("[ServiceWorker][message] " + event.data);
   const opt = {
-                badge: "./icon-72.png",
+                badge: "./sentiment_satisfied_FILL0_wght400_GRAD0_opsz24.png",
                 body: "ブンブン! ブンブン!",
                 icon: "./icon-192.png",
                 vibrate: [200, 100, 200, 100, 200, 100, 200],
