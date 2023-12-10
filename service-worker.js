@@ -19,5 +19,15 @@ self.addEventListener('message', function (event) {
   self.registration.showNotification(event.data, opt);
 });
 
+self.addEventListener("push", function (event) {
+    console.log("[ServiceWorker] Push Received.");
+    console.log(`[ServiceWorker] Push had this data: "${event.data.text()}"`);
+    const title = "Push Recieved!!!";
+    const options = {
+        body: event.data.text()
+    };
+    event.waitUntil(self.registration.showNotification(title, options));
+});
+
 // 現状では、この処理を書かないとService Workerが有効と判定されないようです
 self.addEventListener('fetch', function(event) {});
