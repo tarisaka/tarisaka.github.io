@@ -9,7 +9,14 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('message', function (event) {
   console.log("[ServiceWorker][message] " + event.data);
-  self.registration.showNotification(event.data);
+  const opt = {
+                badge: "./icon-72.png",
+                body: "ブンブン! ブンブン!",
+                icon: "./icon-192.png",
+                vibrate: [200, 100, 200, 100, 200, 100, 200],
+                tag: "vibration-sample",
+              };
+  self.registration.showNotification(event.data, opt);
 });
 
 // 現状では、この処理を書かないとService Workerが有効と判定されないようです
