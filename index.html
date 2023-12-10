@@ -1,39 +1,60 @@
 <!-- index.html -->
 <html>
-<head>
-  <!-- manifest.jsonを呼び出しています -->
-  <link rel="manifest" href="./manifest.json">
-  <script>
-    // service workerが有効なら、service-worker.js を登録します
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js').then(function() { console.log('Service Worker Registered'); });
-    }
-    function grantAccess () {
-      if (Notification.permission != 'granted') {
-        Notification.requestPermission().then(permission => {
-          alert(permission); // granted or denied
-        });
+  <head>
+    <!-- manifest.jsonを呼び出しています -->
+    <link rel="manifest" href="./manifest.json">
+    <script>
+      // service workerが有効なら、service-worker.js を登録します
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js').then(function() { console.log('Service Worker Registered'); });
       }
-    }
-  </script>
-  <title>Hello PWA.</title>
-  <style>
-    body {
-      text-align:center;
-      font-size: 40px;
-      vertical-align: middle;
-    }
-    .image {
-      width: 80%; 
-      margin: auto;
-      display: block;
-    }
-  </style>
-</head>
-<body>
-  <h1>Hello PWA.</h1>
-  <img src="./pwa-logo.svg" alt="PWA logo" class="image" />
-  <a href="p.html">p.html</a>
-  <button onclick="grantAccess()">GrantAccess</button>
-</body>
+      function grantAccess () {
+        if (Notification.permission != 'granted') {
+          Notification.requestPermission().then(permission => {
+            alert(permission); // granted or denied
+          });
+        }
+      }
+    </script>
+    <title>Hello PWA.</title>
+    <style>
+      body {
+        text-align:center;
+        font-size: 40px;
+        vertical-align: middle;
+      }
+      .image {
+        width: 80%; 
+        margin: auto;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hello PWA.</h1>
+    <img src="./pwa-logo.svg" alt="PWA logo" class="image" />
+    <a href="p.html">p.html</a>
+    <button onclick="grantAccess()">GrantAccess</button>
+    <button id="send">通知を送信する</button>
+    <script>
+      // ServiceWorkerの登録
+      window.addEventListener('load', () => {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker
+            .register('sw.js')
+            .then(registration => console.log('registered', registration))
+            .catch(error => console.log('error', error));
+        }
+      });
+    
+      // 通知の送信
+      document.getElementById('send').addEventListener('click', () => {
+        if (Notification.permission === 'granted') {
+          navigator.serviceWorker.ready.then(registration => {
+            registration.active.postMessage('hello!!!');
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
